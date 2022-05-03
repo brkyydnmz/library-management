@@ -10,7 +10,6 @@ export class Book {
     description: String;
     genre: String;
     country: String;
-    //dateReleased: Timestamp;
     isActive: bool = true;
     createdDate: Timestamp = Context.blockTimestamp;
     modifiedDate: Timestamp;
@@ -39,8 +38,8 @@ export class Subscriber {
 
     constructor(/*_subscriptionType: i32,
                 _remainingReadingCount: i32*/){
-        // this.subscriptionType = _subscriptionType;
-        // this.remainingReadingCount = _remainingReadingCount;
+        /* this.subscriptionType = _subscriptionType;
+        this.remainingReadingCount = _remainingReadingCount;*/
     };
 }
 

@@ -6,7 +6,7 @@
 # exit on first error after this point
 set -e
 
-echo "completing raffle by $USER and setting $USER as beneficiary"
+echo "completing library management by $USER and setting $USER as beneficiary"
 echo \$USER is $USER
 echo \$subscriberId is [ $subscriberId ] '(the subscriber Id)'
 echo \$bookId is [ $bookId ] '(the  Id)'

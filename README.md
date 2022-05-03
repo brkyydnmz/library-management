@@ -16,8 +16,8 @@
   <li><a href="#models">Models</a>
     <ul>
       	<li><a href="#book">Book</a></li>
-    	<li><a href="#subscription-type">SubscriptionType</a></li>
         <li><a href="#subscriber">Subscriber</a></li>
+        <li><a href="#subscription-type">SubscriptionType</a></li>
     </ul>
   </li>
   <li><a href="#deploy">Deploy</a></li>
@@ -45,13 +45,21 @@ An application where you pay as much as the number of books you read.
 | owner | AccountId |
 | author | String |
 | bookName | String |
-| Description | String |
+| description | String |
 | genre | String |
 | country | String |
 | isActive | bool |
+| createdDate | Timestamp |
+| modifiedDate | Timestamp |
+| deletedDate | Timestamp |
+##  Subscriber
+| Name | Type |
+| ------ | ------ |
+| owner | AccountId |
+| subscriptionType | i32 |
+| remainingReadingBookCount | i32 |
 | CreatedDate | Timestamp |
 | ModifiedDate | Timestamp |
-| DeletedDate | Timestamp |
 ##  SubscriptionType
 | Name | Type |
 | ------ | ------ |
@@ -59,17 +67,10 @@ An application where you pay as much as the number of books you read.
 | typeCode | String |
 | price | Money |
 | readingBookCount | i32 |
+| isActive | bool |
 | CreatedDate | Timestamp |
 | ModifiedDate | Timestamp |
 | DeletedDate | Timestamp |
-##  Subscriber
-| Name | Type |
-| ------ | ------ |
-| owner | AccountId |
-| subscriptionType | i32 |
-| remainingListenBookCount | i32 |
-| CreatedDate | Timestamp |
-| ModifiedDate | Timestamp |
 
 # Deploy 
 ```
@@ -108,11 +109,11 @@ Getting Books With Genre Parameter|`near view $CONTRACT getBooksByGenreName '{"g
 Getting Books With Country Parameter|`near view $CONTRACT getBooksByCountryName '{"country":"TR"}'`|
 Creating Subscriber|`near call $CONTRACT createSubscriber --accountId sub1.your-account-here.testnet`|
 Buying Subscription|`near call $CONTRACT buySubscription '{"subscriberId":0,"subscriptionTypeId":0}' --accountId sub1.your-account-here.testnet --deposit 3`|
-Getting All Subscribers|`near call $CONTRACT createSubscriber --accountId sub1.your-account-here.testnet`|
+Getting All Subscribers|`near view $CONTRACT getAllSubscribers`|
 Getting Subscribers With Subscriber Id Parameter|`near view $CONTRACT getSubscribersBySubscriberId '{"subscriberId":0}'`|
 Getting Subscribers With Account Id Parameter|`near view $CONTRACT getSubscribersByAccountId '{"AccountId":"sub1.your-account-here.testnet"}'`|
-Adding Subscription Type|`near call $CONTRACT addSubscriptionType '{"typeCode":"Basic","price":"500000000000000000000000","listenBookCount":500}' --accountId your-account-here.testnet`|
-Modifying Subscription Type|`near call $CONTRACT modifySubscriptionType '{"subscriptionTypeId":3,"typeCode":"Old Type MODIFIED","price":"100000000000000000000000","listenBookCount":100}' --accountId your-account-here.testnet`|
+Adding Subscription Type|`near call $CONTRACT addSubscriptionType '{"typeCode":"Basic","price":"500000000000000000000000","readingBookCount":500}' --accountId your-account-here.testnet`|
+Modifying Subscription Type|`near call $CONTRACT modifySubscriptionType '{"subscriptionTypeId":3,"typeCode":"Old Type MODIFIED","price":"100000000000000000000000","readingBookCount":100}' --accountId your-account-here.testnet`|
 Getting All Subscription Type|`near view $CONTRACT getAllSubscriptionTypes '{}'`|
 Getting All Subscription Type By Type Id|`near view $CONTRACT getSubscriptionTypesByTypeID '{"subscriptionTypeId":2}'`|
 

@@ -22,6 +22,7 @@
   </li>
   <li><a href="#deploy">Deploy</a></li>
   <li><a href="#creating-accounts">Creating Accounts</a></li>
+  <li><a href="#terminal">Terminal</a></li>
   <li><a href="#usage">Usage</a></li>
 </ol>
 </details>
@@ -80,6 +81,7 @@ near dev-deploy ./build/release/simple.wasm
 export CONTRACT=<AccountId>
 echo $CONTRACT
 ```
+
 # Creating Accounts
 ```ts
 near create-account <subAccName1>.<AccountName>.testnet --masterAccount <AccountName>.testnet --initialBalance 10
@@ -93,6 +95,39 @@ near send <AccountName>.testnet <subAccName1>.<AccountName>.testnet 10
 near delete <subAccName1>.<AccountName>.testnet <AccountName>.testnet
 near delete <subAccName2>.<AccountName>.testnet <AccountName>.testnet
 ```
+
+# Terminal
+
+*This window is used to compile, deploy and control the contract*
+- Environment
+  ```sh
+  export CONTRACT=        # depends on deployment
+  export OWNER=           # any account you control and create, add books and subscription types
+  export USER=            # any account buy subscription to reading books
+
+
+  # for example
+  # export CONTRACT=dev-1650345345591-4501142324234
+  # export OWNER=your-account-here.testnet
+  # export USER=sub1.your-account-here.testnet
+
+  ```
+
+- Commands
+
+  _Owner scripts_
+  ```sh
+  1.dev-deploy.sh           # cleanup, compile and deploy contract
+  2.create-subaccounts.sh   # generate a summary report of the contract state
+  3.adminRole.sh       
+  6.report.sh
+  ```
+
+  _Public scripts_
+  ```sh
+  4.userRole.sh         
+  5.readBook.sh    
+  ```
 
 # Usage
 |Details|How to Call|

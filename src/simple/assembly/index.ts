@@ -1,4 +1,4 @@
-import { PersistentVector, storage, context, RNG, logging, u128, ContractPromiseBatch } from "near-sdk-as";
+import { PersistentVector, storage, context, logging, u128, ContractPromiseBatch } from "near-sdk-as";
 import { AccountId, Money } from "../../utils";
 import { Book, Subscriber, SubscriptionType } from "./model";
 
@@ -143,7 +143,7 @@ export class Contract {
     element.remainingReadingCount = element.remainingReadingCount-1;
     element.modifiedDate = context.blockTimestamp;
     this.subscribers.replace(subscriberId,element);
-    logging.log(`Success. Playing book id: ${bookId} played by ${storage.getSome<AccountId>("owner")}`);
+    logging.log(`Success. Reading book id: ${bookId} read by ${storage.getSome<AccountId>("owner")}`);
     return this.books[bookId];
   }
 
@@ -227,7 +227,7 @@ export class Contract {
 
   private assert_bookOwner(book: Book): void {
     assert(storage.getSome<AccountId>("owner") == book.owner
-      , `storageOwner:${storage.getSome<AccountId>("owner")}, book.owner:${book.owner} : Only the owner of this raffle may call this method`);
+      , `storageOwner:${storage.getSome<AccountId>("owner")}, book.owner:${book.owner} : Only the owner of this library manager may call this method`);
   }
   
   private assert_bookId(id: i32): void {

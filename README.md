@@ -133,22 +133,24 @@ near delete <subAccName2>.<AccountName>.testnet <AccountName>.testnet
 |Details|How to Call|
 |---|---|
 Initializing|`near call $CONTRACT init --accountId your-account-here.testnet`|
-Adding Book|`near call $CONTRACT addBook '{"author":"Sabahattin Ali","bookName":"Kürk Mantolu Madonna","description":"A mysterious book from Sabahattin Ali","genre":"Literature","country":"TR"}' --accountId your-account-here.testnet`|
-Modifying Book|`near call $CONTRACT modifyBook '{"bookId":0,"author":"Sabahattin Ali","bookName":"Kürk Mantolu Madonna","description":"modificated A mysterious book from Sabahattin Ali","genre":"Literature" "country":"TR"}' --accountId your-account-here.testnet`|
+Adding Book|`near call $CONTRACT addBook '{"author":"Suzanne Collins","bookName":"The Hunger Games","description":"The first book in The Hunger Games series","genre":"Adventure","country":"USA"}' --accountId your-account-here.testnet`|
+Modifying Book|` near call $CONTRACT modifyBook '{"bookId":0,"author":"Suzanne Collins","bookName":"Catching Fire","description":"The second book in The Hunger Games series","genre":"Adventure","country":"USA"}' --accountId your-account-here.testnet`|
 Inactivating Book|`near call $CONTRACT inactivateBook '{"bookId":0}' --accountId your-account-here.testnet`|
 Getting All Books|`near view $CONTRACT getAllBooks`|
 Getting Books With Book Id Parameter|`near view $CONTRACT getBooksByBookId '{"bookId":0}'`|
-Getting Books With Author Name Parameter|`near view $CONTRACT getBooksByAuthorName '{"authorName":"Sabahattin Ali"}'`|
-Getting Books With Book Name Parameter|`near view $CONTRACT getBooksByBookName '{"bookName":"Kürk Mantolu Madonna"}'`|
+Getting Books With Author Name Parameter|`near view $CONTRACT getBooksByAuthorName '{"authorName":"Suzanne Collins"}'`|
+Getting Books With Book Name Parameter|`near view $CONTRACT getBooksByBookName '{"bookName":"The Hunger Games"}'`|
 Getting Books With Genre Parameter|`near view $CONTRACT getBooksByGenreName '{"genre":"Literature"}'`|
 Getting Books With Country Parameter|`near view $CONTRACT getBooksByCountryName '{"country":"TR"}'`|
 Creating Subscriber|`near call $CONTRACT createSubscriber --accountId sub1.your-account-here.testnet`|
 Buying Subscription|`near call $CONTRACT buySubscription '{"subscriberId":0,"subscriptionTypeId":0}' --accountId sub1.your-account-here.testnet --deposit 3`|
+Read Book | `near call $CONTRACT readBook '{"subscriberId":0,"bookId":0}' --accountId sub1.your-account-here.testnet`|
 Getting All Subscribers|`near view $CONTRACT getAllSubscribers`|
 Getting Subscribers With Subscriber Id Parameter|`near view $CONTRACT getSubscribersBySubscriberId '{"subscriberId":0}'`|
 Getting Subscribers With Account Id Parameter|`near view $CONTRACT getSubscribersByAccountId '{"AccountId":"sub1.your-account-here.testnet"}'`|
 Adding Subscription Type|`near call $CONTRACT addSubscriptionType '{"typeCode":"Basic","price":"500000000000000000000000","readingBookCount":500}' --accountId your-account-here.testnet`|
 Modifying Subscription Type|`near call $CONTRACT modifySubscriptionType '{"subscriptionTypeId":3,"typeCode":"Old Type MODIFIED","price":"100000000000000000000000","readingBookCount":100}' --accountId your-account-here.testnet`|
+Inactivating Subscription Type|`near call $CONTRACT inactivateSubscriptionType '{"subscriptionTypeId":0}' --accountId your-account-here.testnet`|
 Getting All Subscription Type|`near view $CONTRACT getAllSubscriptionTypes '{}'`|
 Getting All Subscription Type By Type Id|`near view $CONTRACT getSubscriptionTypesByTypeID '{"subscriptionTypeId":2}'`|
 

@@ -1,170 +1,155 @@
-# `near-sdk-as` Starter Kit
+<div align="center">
+    <h3 align="center">Library Management - Near Protocol</h3>
+</div>
 
-This is a good project to use as a starting point for your AssemblyScript project.
+![](images/near-logo.png)
 
-## Samples
+<details>
+  <summary>Table of Contents</summary>
+<ol>
+  <li><a href="#roles">Roles</a>
+  	<ul>
+  		<li><a href="#officer">Library Officer Usage</a></li>
+    	<li><a href="#reader">Reader usage</a></li>
+   	</ul>
+  </li>
+  <li><a href="#models">Models</a>
+    <ul>
+      	<li><a href="#book">Book</a></li>
+    	<li><a href="#subscription">SubscriptionType</a></li>
+        <li><a href="#subscriber">Subscriber</a></li>
+    </ul>
+  </li>
+  <li><a href="#deploy-usage">Deploy and Usage</a></li>
+  <li><a href="#creatingaccounts">Creating Accounts</a></li>
+  <li><a href="#functions">Functions</a></li>
+</ol>
+</details>
 
-This repository includes a complete project structure for AssemblyScript contracts targeting the NEAR platform.
+Books have a great place in our lives. The library system will also change in the developing world. I thought about how this process would be on BlockChain. And I came to this conclusion:
 
-The example here is very basic.  It's a simple contract demonstrating the following concepts:
-- a single contract
-- the difference between `view` vs. `change` methods
-- basic contract storage
+An application where you pay as much as the number of books you read.
 
-There are 2 AssemblyScript contracts in this project, each in their own folder:
+# Roles
+## Library Officer Usage
+- Create books with book name, author name, genre, description etc. fields. Then may modify, inactivate them.
+- EDetermines and creates membership types.
 
-- **simple** in the `src/simple` folder
-- **singleton** in the `src/singleton` folder
+## Reader usage
+- Creates membership, buy subscription types so buys the right to read books. Also may checks/list books, account details.
 
-### Simple
-
-We say that an AssemblyScript contract is written in the "simple style" when the `index.ts` file (the contract entry point) includes a series of exported functions.
-
-In this case, all exported functions become public contract methods.
-
+# Models
+## Book
+| Name | Type |
+| ------ | ------ |
+| owner | AccountId |
+| author | String |
+| bookName | String |
+| Description | String |
+| genre | String |
+| country | String |
+| isActive | bool |
+| CreatedDate | Timestamp |
+| ModifiedDate | Timestamp |
+| DeletedDate | Timestamp |
+##  SubscriptionType
+| Name | Type |
+| ------ | ------ |
+| owner | AccountId |
+| typeCode | String |
+| price | Money |
+| readingBookCount | i32 |
+| CreatedDate | Timestamp |
+| ModifiedDate | Timestamp |
+| DeletedDate | Timestamp |
+##  Subscriber
+| Name | Type |
+| ------ | ------ |
+| owner | AccountId |
+| subscriptionType | i32 |
+| remainingListenBookCount | i32 |
+| CreatedDate | Timestamp |
+| ModifiedDate | Timestamp |
+# Deploy and Usage
+```
+yarn
+yarn build:release
+near dev-deploy ./build/release/simple.wasm
+export CONTRACT=<AccountId>
+echo $CONTRACT
+```
+# Creating Accounts
 ```ts
-// return the string 'hello world'
-export function helloWorld(): string {}
+near create-account <subAccName1>.<AccountName>.testnet --masterAccount <AccountName>.testnet --initialBalance 10
+near create-account <subAccName2>.<AccountName>.testnet --masterAccount <AccountName>.testnet --initialBalance 10
 
-// read the given key from account (contract) storage
-export function read(key: string): string {}
+near state <subAccName1>.<AccountName>.testnet
+near state <subAccName2>.<AccountName>.testnet
+near state <AccountName>.testnet
 
-// write the given value at the given key to account (contract) storage
-export function write(key: string, value: string): string {}
-
-// private helper method used by read() and write() above
-private storageReport(): string {}
+near send <AccountName>.testnet <subAccName1>.<AccountName>.testnet 10
+near delete <subAccName1>.<AccountName>.testnet <AccountName>.testnet
+near delete <subAccName2>.<AccountName>.testnet <AccountName>.testnet
 ```
-
-### Singleton
-
-We say that an AssemblyScript contract is written in the "singleton style" when the `index.ts` file (the contract entry point) has a single exported class (the name of the class doesn't matter) that is decorated with `@nearBindgen`.
-
-In this case, all methods on the class become public contract methods unless marked `private`.  Also, all instance variables are stored as a serialized instance of the class under a special storage key named `STATE`.  AssemblyScript uses JSON for storage serialization (as opposed to Rust contracts which use a custom binary serialization format called borsh).
-
+# Functions
+Initializing
 ```ts
-@nearBindgen
-export class Contract {
-
-  // return the string 'hello world'
-  helloWorld(): string {}
-
-  // read the given key from account (contract) storage
-  read(key: string): string {}
-
-  // write the given value at the given key to account (contract) storage
-  @mutateState()
-  write(key: string, value: string): string {}
-
-  // private helper method used by read() and write() above
-  private storageReport(): string {}
-}
+near call $CONTRACT init --accountId your-account-here.testnet
 ```
-
-
-## Usage
-
-### Getting started
-
-(see below for video recordings of each of the following steps)
-
-INSTALL `NEAR CLI` first like this: `npm i -g near-cli`
-
-1. clone this repo to a local folder
-2. run `yarn`
-3. run `./scripts/1.dev-deploy.sh`
-3. run `./scripts/2.use-contract.sh`
-4. run `./scripts/2.use-contract.sh` (yes, run it to see changes)
-5. run `./scripts/3.cleanup.sh`
-
-### Videos
-
-**`1.dev-deploy.sh`**
-
-This video shows the build and deployment of the contract.
-
-[![asciicast](https://asciinema.org/a/409575.svg)](https://asciinema.org/a/409575)
-
-**`2.use-contract.sh`**
-
-This video shows contract methods being called.  You should run the script twice to see the effect it has on contract state.
-
-[![asciicast](https://asciinema.org/a/409577.svg)](https://asciinema.org/a/409577)
-
-**`3.cleanup.sh`**
-
-This video shows the cleanup script running.  Make sure you add the `BENEFICIARY` environment variable. The script will remind you if you forget.
-
-```sh
-export BENEFICIARY=<your-account-here>   # this account receives contract account balance
+Adding Book
+```ts
+near call $CONTRACT addBook '{"author":"Sabahattin Ali","bookName":"Kürk Mantolu Madonna","description":"A mysterious book from Sabahattin Ali","genre":"Literature","country":"TR"}' --accountId your-account-here.testnet
 ```
-
-[![asciicast](https://asciinema.org/a/409580.svg)](https://asciinema.org/a/409580)
-
-### Other documentation
-
-- See `./scripts/README.md` for documentation about the scripts
-- Watch this video where Willem Wyndham walks us through refactoring a simple example of a NEAR smart contract written in AssemblyScript
-
-  https://youtu.be/QP7aveSqRPo
-
-  ```
-  There are 2 "styles" of implementing AssemblyScript NEAR contracts:
-  - the contract interface can either be a collection of exported functions
-  - or the contract interface can be the methods of a an exported class
-
-  We call the second style "Singleton" because there is only one instance of the class which is serialized to the blockchain storage.  Rust contracts written for NEAR do this by default with the contract struct.
-
-   0:00 noise (to cut)
-   0:10 Welcome
-   0:59 Create project starting with "npm init"
-   2:20 Customize the project for AssemblyScript development
-   9:25 Import the Counter example and get unit tests passing
-  18:30 Adapt the Counter example to a Singleton style contract
-  21:49 Refactoring unit tests to access the new methods
-  24:45 Review and summary
-  ```
-
-## The file system
-
-```sh
-├── README.md                          # this file
-├── as-pect.config.js                  # configuration for as-pect (AssemblyScript unit testing)
-├── asconfig.json                      # configuration for AssemblyScript compiler (supports multiple contracts)
-├── package.json                       # NodeJS project manifest
-├── scripts
-│   ├── 1.dev-deploy.sh                # helper: build and deploy contracts
-│   ├── 2.use-contract.sh              # helper: call methods on ContractPromise
-│   ├── 3.cleanup.sh                   # helper: delete build and deploy artifacts
-│   └── README.md                      # documentation for helper scripts
-├── src
-│   ├── as_types.d.ts                  # AssemblyScript headers for type hints
-│   ├── simple                         # Contract 1: "Simple example"
-│   │   ├── __tests__
-│   │   │   ├── as-pect.d.ts           # as-pect unit testing headers for type hints
-│   │   │   └── index.unit.spec.ts     # unit tests for contract 1
-│   │   ├── asconfig.json              # configuration for AssemblyScript compiler (one per contract)
-│   │   └── assembly
-│   │       └── index.ts               # contract code for contract 1
-│   ├── singleton                      # Contract 2: "Singleton-style example"
-│   │   ├── __tests__
-│   │   │   ├── as-pect.d.ts           # as-pect unit testing headers for type hints
-│   │   │   └── index.unit.spec.ts     # unit tests for contract 2
-│   │   ├── asconfig.json              # configuration for AssemblyScript compiler (one per contract)
-│   │   └── assembly
-│   │       └── index.ts               # contract code for contract 2
-│   ├── tsconfig.json                  # Typescript configuration
-│   └── utils.ts                       # common contract utility functions
-└── yarn.lock                          # project manifest version lock
+Modifying Book
+```ts
+near call $CONTRACT modifyBook '{"bookId":0,"author":"Sabahattin Ali","bookName":"Kürk Mantolu Madonna","description":"modificated A mysterious book from Sabahattin Ali","genre":"Literature" "country":"TR"}' --accountId your-account-here.testnet
 ```
-
-You may clone this repo to get started OR create everything from scratch.
-
-Please note that, in order to create the AssemblyScript and tests folder structure, you may use the command `asp --init` which will create the following folders and files:
-
+Inactivating Book
+```ts
+near call $CONTRACT inactivateBook '{"bookId":0}' --accountId your-account-here.testnet
 ```
-./assembly/
-./assembly/tests/
-./assembly/tests/example.spec.ts
-./assembly/tests/as-pect.d.ts
+Getting All Books
+```ts
+near view $CONTRACT getAllBooks
+```
+Getting Books With Parameters
+```ts
+near view $CONTRACT getBooksByBookId '{"bookId":0}'
+near view $CONTRACT getBooksByAuthorName '{"authorName":"Sabahattin Ali"}'
+near view $CONTRACT getBooksByBookName '{"bookName":"Kürk Mantolu Madonna"}'
+near view $CONTRACT getBooksByGenreName '{"genre":"Literature"}'
+near view $CONTRACT getBooksByCountryName '{"country":"TR"}'
+```
+Creating Subscriber
+```ts
+near call $CONTRACT createSubscriber --accountId sub1.your-account-here.testnet
+```
+Buyying Subscription
+```ts
+near call $CONTRACT buySubscription '{"subscriberId":0,"subscriptionTypeId":0}' --accountId sub1.your-account-here.testnet --deposit 3
+```
+Getting All Subscribers
+```ts
+near view $CONTRACT getAllSubscribers
+```
+Getting Subscribers With Parameter
+```ts
+near view $CONTRACT getSubscribersBySubscriberId '{"subscriberId":0}'
+near view $CONTRACT getSubscribersByAccountId '{"AccountId":"sub1.your-account-here.testnet"}'
+```
+Adding Subscription Type
+```ts
+near call $CONTRACT addSubscriptionType '{"typeCode":"Basic","price":"500000000000000000000000","listenBookCount":500}' --accountId your-account-here.testnet
+```
+Modifying Subscription Type
+```ts
+near call $CONTRACT modifySubscriptionType '{"subscriptionTypeId":3,"typeCode":"Old Type MODIFIED","price":"100000000000000000000000","listenBookCount":100}' --accountId your-account-here.testnet
+```
+Getting All Subscription Type
+```ts
+near view $CONTRACT getAllSubscriptionTypes '{}'
+```
+Getting All Subscription Type By Type Id
+```ts
+near view $CONTRACT getSubscriptionTypesByTypeID '{"subscriptionTypeId":2}'
 ```

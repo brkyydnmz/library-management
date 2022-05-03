@@ -9,19 +9,19 @@
 <ol>
   <li><a href="#roles">Roles</a>
   	<ul>
-  		<li><a href="#libraryOfficerUsage">Library Officer Usage</a></li>
-    	<li><a href="#readerUsage">Reader Usage</a></li>
+  		<li><a href="#library-officer-usage">Library Officer Usage</a></li>
+    	<li><a href="#reader-usage">Reader Usage</a></li>
    	</ul>
   </li>
   <li><a href="#models">Models</a>
     <ul>
       	<li><a href="#book">Book</a></li>
-    	<li><a href="#subscriptionType">SubscriptionType</a></li>
+    	<li><a href="#subscription-type">SubscriptionType</a></li>
         <li><a href="#subscriber">Subscriber</a></li>
     </ul>
   </li>
   <li><a href="#deploy">Deploy</a></li>
-  <li><a href="#creatingAccounts">Creating Accounts</a></li>
+  <li><a href="#creating-accounts">Creating Accounts</a></li>
   <li><a href="#usage">Usage</a></li>
 </ol>
 </details>

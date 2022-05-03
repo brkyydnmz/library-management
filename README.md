@@ -9,8 +9,8 @@
 <ol>
   <li><a href="#roles">Roles</a>
   	<ul>
-  		<li><a href="#library Officer Usage">Library Officer Usage</a></li>
-    	<li><a href="#reader usage">Reader usage</a></li>
+  		<li><a href="#libraryOfficerUsage">Library Officer Usage</a></li>
+    	<li><a href="#readerUsage">Reader Usage</a></li>
    	</ul>
   </li>
   <li><a href="#models">Models</a>
@@ -21,7 +21,7 @@
     </ul>
   </li>
   <li><a href="#deploy">Deploy</a></li>
-  <li><a href="#creating Accounts">Creating Accounts</a></li>
+  <li><a href="#creatingAccounts">Creating Accounts</a></li>
   <li><a href="#usage">Usage</a></li>
 </ol>
 </details>
@@ -35,7 +35,7 @@ An application where you pay as much as the number of books you read.
 - Create books with book name, author name, genre, description etc. fields. Then may modify, inactivate them.
 - EDetermines and creates membership types.
 
-## Reader usage
+## Reader Usage
 - Creates membership, buy subscription types so buys the right to read books. Also may checks/list books, account details.
 
 # Models

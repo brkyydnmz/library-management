@@ -24,6 +24,7 @@
   <li><a href="#creating-accounts">Creating Accounts</a></li>
   <li><a href="#terminal">Terminal</a></li>
   <li><a href="#usage">Usage</a></li>
+  <li><a href="#links">Links</a></li>
 </ol>
 </details>
 
@@ -31,6 +32,7 @@ Books have a great place in our lives. The library system will also change in th
 
 An application where you pay as much as the number of books you read.
 
+You can find the link of the loom video and Patika at the bottom.
 # Roles
 ## Library Officer Usage
 - Create books with book name, author name, genre, description etc. fields. Then may modify, inactivate them.
@@ -154,6 +156,7 @@ Inactivating Subscription Type|`near call $CONTRACT inactivateSubscriptionType '
 Getting All Subscription Type|`near view $CONTRACT getAllSubscriptionTypes '{}'`|
 Getting All Subscription Type By Type Id|`near view $CONTRACT getSubscriptionTypesByTypeID '{"subscriptionTypeId":2}'`|
 
-
-
+# Links
+- [Loom Video link](https://www.loom.com/share/0c71d73b0f8641919e2f87c9f4a1ded1)
+- [Patika.dev account](https://app.patika.dev/brkyydnmz)
 
